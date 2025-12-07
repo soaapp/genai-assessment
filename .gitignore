@@ -1,2 +1,6 @@
+# Frontend ignores
 frontend/node_modules
 frontend/package-lock.json
+
+# Backend ignores
+backend/myenv
