@@ -34,7 +34,6 @@ def run_agent(task):
     return {"task": task, "output": output, "tool": name, "steps": log, "ts": datetime.datetime.now().isoformat()}
 
 # API Section
-
 class Request(BaseModel): task: str
 
 @app.post("/process")
