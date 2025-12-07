@@ -18,7 +18,7 @@ function App() {
           <Group align="flex-end">
             <TextInput 
               label="Enter a task"
-              placeholder="e.g., 'calc 5 + 10' or 'weather Toronto' or 'upper hello'"
+              placeholder="e.g., 'What is 5 + 10' or 'What is the weather in Toronto' or 'hello there'"
               style={{ flex: 1 }}
             />
             <Button>
