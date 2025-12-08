@@ -26,6 +26,7 @@ def tool_weather(q, trace):
     if "weather" in q.lower():
         trace.append("WeatherTool: Detected keyword 'weather'")
         
+        # TODO: If the city is still Unknown maybe we can fallback on saying "Unable to get weather"
         city = "Unknown"
         for p in ["in ", "at ", "for "]:
             if p in q:
@@ -49,7 +50,7 @@ def tool_text(q, trace):
     if "upper" in q.lower():
         trace.append("TextProcessorTool: Logic 'UPPERCASE' selected based on keyword")
         return "TextProcessorTool", q.upper()
-    elif "lower" in q.upper():
+    elif "lower" in q.lower():
         trace.append("TextProcessorTool: Logic 'LOWERCASE' selected based on keyword")
         return "TextProcessorTool", q.lower()
     else:
