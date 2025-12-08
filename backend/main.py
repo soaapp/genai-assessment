@@ -127,6 +127,18 @@ def process(req: Request):
     response = run_agent(req.task)
     return response
 
+@app.get("/history")
+def get_history():
+    try:
+        with sqlite3.connect(DB_NAME) as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM interactions ORDER BY id DESC LIMIT 20")
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+    except Exception as e:
+        return {"error": str(e)}
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=3001)
