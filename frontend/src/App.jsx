@@ -2,14 +2,19 @@ import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { Container, Title, TextInput, Button, Paper, Group, Stack, Text, Code, ScrollArea } from '@mantine/core';
 import { IconRobot, IconHistory } from '@tabler/icons-react';
+import { useDisclosure } from '@mantine/hooks';
 
 
 function App() {
-
+  // States for main UI components
   const [query, setQuery] = useState('');
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [logs, setLogs] = useState([]);
+
+  // States for history
+  const [opened, {open, close}] = useDisclosure(false);
+  const [historyItems, setHistoryItems] = useState([]);
 
   const viewport = useRef(null);
 
@@ -19,6 +24,18 @@ function App() {
       viewport.current.scrollTo({ top: viewport.current.scrollHeight, behavior: 'smooth' });
     }
   }, [logs]);
+
+  // Function to handle history
+  const fetchHistory = async () => {
+    try {
+      const res = await fetch('http://localhost:3001/history');
+      const data = await res.json();
+      setHistoryItems(data);
+      open();
+    } catch (e) {
+      console.error("Failed to fetch history from SQLite", e);
+    }
+  }
 
   const handleProcess = async () => {
     if (!query) return;
