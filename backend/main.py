@@ -7,6 +7,43 @@ app = FastAPI()
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 
+# Persistence Layer (Utilizing SQLite)
+DB_NAME = "agent_history.db"
+
+def init_db():
+    with sqlite3.connect(DB_NAME) as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+                CREATE TABLE IF NOT EXISTS interactions (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            timestamp TEXT,
+                            task TEXT,
+                            tool_used TEXT,
+                            final_output TEXT,
+                            steps_log TEXT
+                       )
+                ''')
+        conn.commit()
+
+def log_request(data):
+    with sqlite3.connect(DB_NAME) as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+                       INSERT INTO interactions (timestamp, task, tool_used, final_output, steps_log)
+            VALUES (?, ?, ?, ?, ?)
+                       ''', (
+                           data["ts"],
+                           data["task"],
+                           data["tool"],
+                           str(data["output"]),
+                           json.dumps(data["steps"])
+                       ))
+        conn.commit()
+        print(f"Saved task request '{data['task']}' to SQLite database.")
+
+
+init_db()
+
 def tool_calc(q, trace):
     if match := re.search(r'\d[\d\s\+\-\*\/]*', q):
         expression = match.group(0).strip()
