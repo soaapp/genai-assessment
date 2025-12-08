@@ -8,7 +8,7 @@ app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], all
 
 
 def tool_calc(q, trace):
-    if match := re.search(r'[\d\.\s\+\-\*\/]+', q):
+    if match := re.search(r'\d[\d\s\+\-\*\/]*', q):
         expression = match.group(0).strip()
         # Verify prompt has at least one operator
         if len(expression) > 1 and any(op in expression for op in "+-*/"):
