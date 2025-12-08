@@ -1,7 +1,7 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import { Container, Title, TextInput, Button, Paper, Group, Stack, Text, Code } from '@mantine/core';
-import { IconRobot } from '@tabler/icons-react';
+import { useState, useEffect, useRef } from 'react';
+import { Container, Title, TextInput, Button, Paper, Group, Stack, Text, Code, ScrollArea } from '@mantine/core';
+import { IconRobot, IconHistory } from '@tabler/icons-react';
 
 
 function App() {
@@ -11,12 +11,20 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [logs, setLogs] = useState([]);
 
+  const viewport = useRef(null);
+
+  // Auto-scroll to bottom whenever logs update
+  useEffect(() => {
+    if (viewport.current) {
+      viewport.current.scrollTo({ top: viewport.current.scrollHeight, behavior: 'smooth' });
+    }
+  }, [logs]);
+
   const handleProcess = async () => {
     if (!query) return;
 
     setLoading(true);
     setResult(null);
-    setLogs([]);
 
     try {
       const response = await fetch('http://localhost:3001/process', {
@@ -34,7 +42,11 @@ function App() {
       const data = await response.json();
 
       setResult(data.output);
-      setLogs(data.steps);
+      setLogs(prev => [
+        ...prev, 
+        "", 
+        ...data.steps
+      ]);
 
     } catch (error) {
       console.error("Error:", error);
@@ -71,25 +83,31 @@ function App() {
           </Group>
         </Paper>
 
+        {result && (
+          <Paper withBorder p="md" radius="md" bg="blue.0" style={{ borderColor: '#228be6' }}>
+            <Title order={5} c="blue.9" mb="xs">Result</Title>
+            <Code block color="blue" fz="lg">{result}</Code>
+          </Paper>
+        )}
+
         
         <Paper withBorder p="md" radius="md" bg="gray.0">
-          <Title order={4} mb="md">Logs</Title>
-          <Group mt="lg">
-            <Text fw={700}>Final Output:</Text>
-            <Code color="blue" fz="lg">
-              {result || "Waiting for prompt"}
-            </Code>
+          <Group mb="sm">
+            <IconHistory size={20} opacity={0.5} />
+            <Title order={5}>System Logs</Title>
           </Group>
-
-          <Stack gap="xs">
-            {logs.length === 0 && <Text c="dimmed" size="sm">No logs yet...</Text>}
-            
-            {logs.map((step, index) => (
-              <Text key={index} size="sm" style={{ fontFamily: 'monospace' }}>
-                {step}
-              </Text>
-            ))}
-          </Stack>
+          
+          <ScrollArea h={300} viewportRef={viewport} type="always" offsetScrollbars>
+            <Stack gap={4}>
+              {logs.length === 0 && <Text c="dimmed" size="sm">Waiting for input...</Text>}
+              
+              {logs.map((step, index) => (
+                <Text key={index} size="xs" style={{ fontFamily: 'monospace' }} c="dimmed">
+                  {step}
+                </Text>
+              ))}
+            </Stack>
+          </ScrollArea>
         </Paper>
         
       </Stack>
