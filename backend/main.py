@@ -54,7 +54,7 @@ def tool_text(q, trace):
         return "TextProcessorTool", q.lower()
     else:
         trace.append("TextProcessorTool: Logic 'Total Length of Prompt' selected")
-        return "TextProcessorTool", len(q)
+        return "TextProcessorTool", str(len(q))
 
 
 def run_agent(task):
