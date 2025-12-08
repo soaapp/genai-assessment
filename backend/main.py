@@ -29,8 +29,8 @@ def log_request(data):
     with sqlite3.connect(DB_NAME) as conn:
         cursor = conn.cursor()
         cursor.execute('''
-                       INSERT INTO interactions (timestamp, task, tool_used, final_output, steps_log)
-            VALUES (?, ?, ?, ?, ?)
+                INSERT INTO interactions (timestamp, task, tool_used, final_output, steps_log)
+                VALUES (?, ?, ?, ?, ?)
                        ''', (
                            data["ts"],
                            data["task"],
