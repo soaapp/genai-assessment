@@ -42,10 +42,19 @@ function App() {
       const data = await response.json();
 
       setResult(data.output);
+      const timestamp = new Date(data.ts).toLocaleTimeString('en-US', {
+        hour12: false,
+        hour: "numeric", 
+        minute: "numeric", 
+        second: "numeric"
+      });
+
+      const timedLogs = data.steps.map(step => `[${timestamp}] ${step}`);
+
       setLogs(prev => [
         ...prev, 
-        "", 
-        ...data.steps
+        ...timedLogs,
+        ""
       ]);
 
     } catch (error) {
