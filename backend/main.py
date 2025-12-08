@@ -125,6 +125,7 @@ class Request(BaseModel): task: str
 @app.post("/process")
 def process(req: Request):
     response = run_agent(req.task)
+    log_request(response)
     return response
 
 @app.get("/history")

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
-import { Container, Title, TextInput, Button, Paper, Group, Stack, Text, Code, ScrollArea } from '@mantine/core';
-import { IconRobot, IconHistory } from '@tabler/icons-react';
+import { Container, Title, TextInput, Button, Paper, Group, Stack, Text, Code, ScrollArea, Drawer, Badge } from '@mantine/core';
+import { IconRobot, IconHistory, IconDatabase } from '@tabler/icons-react';
 import { useDisclosure } from '@mantine/hooks';
 
 
@@ -84,10 +84,39 @@ function App() {
 
   return (
     <Container size="md" py="xl">
+      {/* History UI Component*/}
+      <Drawer opened={opened} onClose={close} title="Session History" position="right" size="md">
+        <Stack>
+          {historyItems.map((item) => (
+            <Paper key={item.id} withBorder p="sm" radius="md" bg="gray.0">
+              <Group justify="space-between" mb="xs">
+                <Badge color="yellow">{item.tool_used || "General"}</Badge>
+                <Text size="xs" c="dimmed">
+                  {new Date(item.timestamp).toLocaleTimeString()}
+                </Text>
+              </Group>
+              <Text size="sm" fw={500}>User input: {item.task}</Text>
+              <Code block mt="xs" color="gray.2">Agent response: {item.final_output}</Code>
+            </Paper>
+          ))}
+        </Stack>
+      </Drawer>
+
+
       <Stack gap="lg">
-        <Group>
-          <IconRobot size={32} color="#228be6" />
-          <Title order={2}>Agent</Title>
+        <Group justify="space-between">
+          <Group>
+            <IconRobot size={32} color="#228be6" />
+            <Title order={2}>Agent</Title>
+          </Group>
+          
+          <Button 
+            variant="light" 
+            leftSection={<IconDatabase size={16} />} 
+            onClick={fetchHistory}
+          >
+            History
+          </Button>
         </Group>
 
         <Paper withBorder p="md" shadow="sm" radius="md">
@@ -112,7 +141,7 @@ function App() {
         {result && (
           <Paper withBorder p="md" radius="md" bg="blue.0" style={{ borderColor: '#228be6' }}>
             <Title order={5} c="blue.9" mb="xs">Result</Title>
-            <Code block color="blue" fz="lg">{result}</Code>
+            <Code block color="blue.1" fz="lg">{result}</Code>
           </Paper>
         )}
 
