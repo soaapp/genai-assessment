@@ -6,6 +6,40 @@ import { IconRobot } from '@tabler/icons-react';
 
 function App() {
 
+  const [query, setQuery] = useState('');
+  const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false)
+
+  const handleProcess = async () => {
+    if (!query) return;
+
+    setLoading(true);
+    setResult(null);
+
+    try {
+      const response = await fetch('http://localhost:3001/process', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ query: query }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Unsuccessful network call");
+      }
+
+      const data = await response.json();
+
+      setResult(data.result);
+    } catch (error) {
+      console.error("Error:", error);
+      setResult("Error connecting to backend");
+    } finally {
+      setLoading(false)
+    }
+  };
+
   return (
     <Container size="md" py="xl">
       <Stack gap="lg">
