@@ -22,7 +22,7 @@ function App() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ query: query }),
+        body: JSON.stringify({ task: query }),
       });
 
       if (!response.ok) {
@@ -31,7 +31,7 @@ function App() {
 
       const data = await response.json();
 
-      setResult(data.result);
+      setResult(data.output);
     } catch (error) {
       console.error("Error:", error);
       setResult("Error connecting to backend");
@@ -54,8 +54,14 @@ function App() {
               label="Enter a task"
               placeholder="e.g., 'What is 5 + 10' or 'What is the weather in Toronto' or 'hello there'"
               style={{ flex: 1 }}
+              value={query}
+              onChange={(event) => setQuery(event.currentTarget.value)}
+              onKeyDown={(e) => { if (e.key === "Enter") handleProcess() }}
             />
-            <Button>
+            <Button
+              onClick={handleProcess}
+              loading={loading}
+            >
               Process
             </Button>
           </Group>
@@ -66,7 +72,9 @@ function App() {
           <Title order={4} mb="md">Logs</Title>
           <Group mt="lg">
             <Text fw={700}>Final Output:</Text>
-            <Code color="blue" fz="lg"></Code>
+            <Code color="blue" fz="lg">
+              {result || "Waiting for prompt"}
+            </Code>
           </Group>
         </Paper>
         
