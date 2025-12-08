@@ -8,13 +8,15 @@ function App() {
 
   const [query, setQuery] = useState('');
   const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [logs, setLogs] = useState([]);
 
   const handleProcess = async () => {
     if (!query) return;
 
     setLoading(true);
     setResult(null);
+    setLogs([]);
 
     try {
       const response = await fetch('http://localhost:3001/process', {
@@ -32,6 +34,8 @@ function App() {
       const data = await response.json();
 
       setResult(data.output);
+      setLogs(data.steps);
+
     } catch (error) {
       console.error("Error:", error);
       setResult("Error connecting to backend");
@@ -76,6 +80,16 @@ function App() {
               {result || "Waiting for prompt"}
             </Code>
           </Group>
+
+          <Stack gap="xs">
+            {logs.length === 0 && <Text c="dimmed" size="sm">No logs yet...</Text>}
+            
+            {logs.map((step, index) => (
+              <Text key={index} size="sm" style={{ fontFamily: 'monospace' }}>
+                {step}
+              </Text>
+            ))}
+          </Stack>
         </Paper>
         
       </Stack>
