@@ -95,8 +95,10 @@ function App() {
                   {new Date(item.timestamp).toLocaleTimeString()}
                 </Text>
               </Group>
-              <Text size="sm" fw={500}>User input: {item.task}</Text>
-              <Code block mt="xs" color="gray.2">Agent response: {item.final_output}</Code>
+              <Text size="sm" fw={500}>User input:</Text>
+              <Code block mt="xs" color="gray.2">{item.task}</Code>
+              <Text size="sm" fw={500}>Agent response:</Text>
+              <Code block mt="xs" color="gray.2">{item.final_output}</Code>
             </Paper>
           ))}
         </Stack>
@@ -106,7 +108,7 @@ function App() {
       <Stack gap="lg">
         <Group justify="space-between">
           <Group>
-            <IconRobot size={32} color="#228be6" />
+            <IconRobot size={32} color="#007be6ff" />
             <Title order={2}>Agent</Title>
           </Group>
           
@@ -139,9 +141,9 @@ function App() {
         </Paper>
 
         {result && (
-          <Paper withBorder p="md" radius="md" bg="blue.0" style={{ borderColor: '#228be6' }}>
+          <Paper withBorder p="md" radius="md" bg="blue.0" style={{ borderColor: '#007be6ff' }}>
             <Title order={5} c="blue.9" mb="xs">Result</Title>
-            <Code block color="blue.1" fz="lg">{result}</Code>
+            <Code block color="blue.3" fz="lg">{result}</Code>
           </Paper>
         )}
 
