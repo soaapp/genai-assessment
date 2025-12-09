@@ -4,3 +4,5 @@ frontend/package-lock.json
 
 # Backend ignores
 backend/myenv
+backend/app/__pycache__
+backend/tests/__pycache__
