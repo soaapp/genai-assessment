@@ -1,5 +1,5 @@
 import datetime
-from .tools import TOOLS
+from .tools import AGENT_TOOLS
 
 def run_agent(task):
     trace = [f"Agent: Received task '{task}'"]
@@ -7,7 +7,7 @@ def run_agent(task):
     selected_tool = None
     final_output = None
 
-    for tool_func in TOOLS:
+    for tool_func in AGENT_TOOLS:
         result = tool_func(task, trace)
         if result:
             selected_tool, final_output = result

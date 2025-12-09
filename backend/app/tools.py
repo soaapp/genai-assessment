@@ -51,4 +51,4 @@ def tool_text(q, trace):
         return "TextProcessorTool", str(len(q))
     
 
-TOOLS = [tool_calc, tool_weather, tool_text]
+AGENT_TOOLS = [tool_calc, tool_weather, tool_text]
