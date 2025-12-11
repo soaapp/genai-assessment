@@ -53,7 +53,6 @@ def tool_weather(q, trace):
     return None
 
 def tool_text(q, trace):
-    trace.append("TextProcessorTool: Fallback tool activated (no other tools matched)")
     trace.append("TextProcessorTool: Analyzing query for text processing keywords")
 
     if "upper" in q.lower():
@@ -70,7 +69,7 @@ def tool_text(q, trace):
         return "TextProcessorTool", result
     else:
         trace.append("TextProcessorTool: No specific keyword found")
-        trace.append("TextProcessorTool: Defaulting to length calculation")
+        trace.append("TextProcessorTool: Defaulting to length calculation (Fallback tool)")
         result = str(len(q))
         trace.append(f"TextProcessorTool: Query length = {result} characters")
         return "TextProcessorTool", result
