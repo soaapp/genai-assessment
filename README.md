@@ -172,7 +172,7 @@ genai-assessment/
 ## Design Decisions
 
 **Tool Selection**: 
-Tools are evaluated sequentially. The first tool that matches the input pattern is selected and executed. This keeps the agent logic simple and predictable.
+Tools are evaluated sequentially. The first tool that matches the input pattern is selected and executed. This keeps the agent logic simple and predictable. In this scenario it will be easy to debug, easy to test, and easy to predict agent "intelligence".
 
 **Agent Logic/Solution**: 
 The "agent" uses regex and keyword detection instead of an actual LLM integration. This was intentional to keep the system lightweight and fast. Also, I wanted to follow the direction of the assignment. Ensuring that my main focus is on architecture, readability, and solutioning. Over complicating the application would be a poor use of time and would stray away from the goal.
@@ -189,17 +189,34 @@ A JSON file is an industry standard for data but in this case I'd have several p
 
 SQLite won for these overall reasons. If I needed to scale it would be very simple to add entries. It persists effectively, it's very queryable in case I wanted to implement that, and it is build into python as well! 
 
-**Frontend Port**: 
+**Frontend**: 
 Vite assigns the frontend port dynamically. The backend is fixed on port 3001 to match CORS configuration.
 
+MantineUI for a simple, lightweight UI design. 
 
-## Known Limitations
+
+## Known Limitations 
 
 - CalculatorTool uses `eval()` for expression evaluation. This works for the demo but isn't suitable for production due to security concerns.
 - Limited error handling on malformed inputs.
 - No authentication or rate limiting. (Bonus RBAC Task is not implemented due to the decision that it would reduce code readability and was not a valuable trade off for this demo.)
 - Tool selection is first-match only. Ambiguous inputs may not route to the intended tool.
 - Execution traces in the history view could be formatted better for readability.
+- Single level logging. Would be helpful to add DEBUG/INFO level logging. 
+
+## Future Improvements
+
+Given more time, I would add:
+
+1. Add PROD level error handling and input validation.
+2. Implement "streaming" so the logs (and potentially the response) could improve UX and logging experience. Adding streaming for the purpose of this demo was not the target, and wanted to focus on clean architecture with reliable logging,
+3. Improve history UI to display execution steps more clearly and more similar to the logs shown
+4. Add tool confidence scoring for better routing on ambiguous inputs, also more logic around falling back on the appropriate tool. Also I think it would be very cool to add even a "guardrail" system that can ask to "Clarify task request" if no tool was selected.
+5. Support multi-step reasoning by chaining tools
+6. Add integration tests and increase test coverage to unhappy paths. E.g What happens if a user types "upper weather 4 * 3"?
+7. Would be a good design decision to create a tool class or even a simple tool decorator (If you're not going to use the LangChain native one) so that adding tools is organized and structured. This makes them scalable and also conforming them to a certain structure keeps testing/logic very clean.
+8. If this was a PROD-like scenario, I'd also look into adding caching so that duplicate requests/tasks can be very quickly retrieved without the "agent logic" being required again
+
 
 ## Time Spent
 
@@ -209,22 +226,6 @@ Approximately 8-9 hours total:
 - Frontend development: 2 hours
 - Testing and debugging: 1 hour
 - Documentation: 1 hours
-
-## Future Improvements
-
-Given more time, I would add:
-
-1. Add PROD level error handling and input validation.
-2. Implement "streaming" so the logs (and potentially the response) could improve UX and logging experience. Adding streaming for the purpose of this demo was not the target, and wanted to focus on clean architecture with reliable logging,
-3. Improve history UI to display execution steps more clearly and more similar to the logs shown
-4. Add tool confidence scoring for better routing on ambiguous inputs, also more logic around falling back on the appropriate tool.
-5. Support multi-step reasoning by chaining tools
-6. Add integration tests and increase test coverage to unhappy paths
-7. I think it would be very cool to add even a "guardrail" system that can ask to "Clarify task request" if no tool was selected.
-
-## Environment
-
-Tested on macOS with Python 3.14.0, Node 24.10.0, and npm 11.6.0. Should work on Windows and Linux with compatible versions.
 
 ## Special Mention
 To my cat Pluto for always supporting me while I code. <img height="95" alt="Screenshot 2025-12-10 at 10 37 21 PM" src="https://github.com/user-attachments/assets/efc89bfd-f54a-4f89-b1ff-5ee9296bd4cc" />
