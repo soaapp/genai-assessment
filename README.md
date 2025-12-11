@@ -20,14 +20,17 @@ The following is a full-stack system that demonstrates agent-based task routing 
 
 ### HLD
 
+<img width="415" height="1105" alt="HLD_BMO_assessment_drawio" src="https://github.com/user-attachments/assets/75625fff-c4d9-4a08-843b-25262718cfd9" />
 
 
 ### Sequence Diagram
 
+<img width="8912" height="12570" alt="jay_ssd_bmo_assessment" src="https://github.com/user-attachments/assets/a700ebf4-9f4d-4519-aad3-95618eadf653" />
 
 
 ### Class Diagram
 
+<img width="9062" height="6360" alt="jay_classdiag_bmo_assessment" src="https://github.com/user-attachments/assets/a9a5aca0-abe6-4239-896f-5b916455a810" />
 
 
 ## Prerequisites
