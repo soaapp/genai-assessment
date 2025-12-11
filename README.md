@@ -1,6 +1,7 @@
 # GenAI Agent Assessment
 
-Hello! I am Jay Jahanzad, an AI/ML Engineer with a huge passion for building and learning. This is my submission for the GenAI Coding Challenge. Big big thank you for looking at this and the team at BMO. 
+Hello! I am Jay Jahanzad, an AI/ML Engineer with a huge passion for building and learning. This is my submission for the GenAI Coding Challenge. Big big thank you for looking at this and the team at  <img height="25" alt="bmo-logo" src="https://github.com/user-attachments/assets/55fc699a-5306-43ec-a56a-6c77172e4ff0" />
+
 
 The following is a full-stack system that demonstrates agent-based task routing and tool execution. The agent analyzes user input and selects the appropriate tool to handle the request, returning both the result and a detailed execution trace.
 
@@ -224,4 +225,8 @@ Given more time, I would add:
 ## Environment
 
 Tested on macOS with Python 3.14.0, Node 24.10.0, and npm 11.6.0. Should work on Windows and Linux with compatible versions.
+
+## Special Mention
+To my cat Pluto for always supporting me while I code. <img height="95" alt="Screenshot 2025-12-10 at 10 37 21 PM" src="https://github.com/user-attachments/assets/efc89bfd-f54a-4f89-b1ff-5ee9296bd4cc" />
+
 
