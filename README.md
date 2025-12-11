@@ -17,7 +17,6 @@ The following is a full-stack system that demonstrates agent-based task routing 
 
 ## Architecture
 
-For the following diagrams I used draw.io for the HLDs and for the SSD and Class Diagram it is built with Mermaid.
 
 ### HLD
 
