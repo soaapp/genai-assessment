@@ -197,7 +197,6 @@ MantineUI for a simple, lightweight UI design.
 
 ## Known Limitations 
 
-- CalculatorTool uses `eval()` for expression evaluation. This works for the demo but isn't suitable for production due to security concerns.
 - Limited error handling on malformed inputs.
 - No authentication or rate limiting. (Bonus RBAC Task is not implemented due to the decision that it would reduce code readability and was not a valuable trade off for this demo.)
 - Tool selection is first-match only. Ambiguous inputs may not route to the intended tool.
