@@ -1,4 +1,5 @@
 import re, random
+from ast import literal_eval
 
 def tool_calc(q, trace):
     trace.append("CalculatorTool: Checking if query contains math expression")
@@ -10,7 +11,6 @@ def tool_calc(q, trace):
             trace.append(f"CalculatorTool: Validated expression contains operators")
             try:
                 trace.append(f"CalculatorTool: Evaluating '{expression}'")
-                # Use safer evaluation by parsing and evaluating allowed operators only
                 result = str(eval(expression, {"__builtins__": {}}, {}))
                 trace.append(f"CalculatorTool: Successfully calculated result = {result}")
                 return "CalculatorTool", result
