@@ -92,7 +92,7 @@ function App() {
               <Group justify="space-between" mb="xs">
                 <Badge color="yellow">{item.tool_used || "General"}</Badge>
                 <Text size="xs" c="dimmed">
-                  {new Date(item.timestamp).toLocaleTimeString()}
+                  {new Date(item.timestamp).toLocaleString()}
                 </Text>
               </Group>
               <Text size="sm" fw={500}>User input:</Text>
