@@ -207,10 +207,10 @@ MantineUI for a simple, lightweight UI design.
 
 Given more time, I would add:
 
-1. Add PROD level error handling and input validation.
+1. Add PROD level error handling and input validation. Also I think it would be very cool to add even a "guardrail" system.
 2. Implement "streaming" so the logs (and potentially the response) could improve UX and logging experience. Adding streaming for the purpose of this demo was not the target, and wanted to focus on clean architecture with reliable logging,
 3. Improve history UI to display execution steps more clearly and more similar to the logs shown
-4. Add tool confidence scoring for better routing on ambiguous inputs, also more logic around falling back on the appropriate tool. Also I think it would be very cool to add even a "guardrail" system. Or a supervisor agent that can ask to "Clarify task request" if no tool was selected.
+4. Add tool confidence scoring for better routing on ambiguous inputs, also more logic around falling back on the appropriate tool. Or a supervisor agent that can ask to "Clarify task request" if no tool was selected.
 5. Support multi-step reasoning by chaining tools
 6. Add more unit tests and increase test coverage to more paths. 
   E.g What happens if a user types:
@@ -220,6 +220,7 @@ Given more time, I would add:
 8. If this was a PROD-like scenario, I'd also look into adding caching so that duplicate requests/tasks can be very quickly retrieved without the "agent logic" being required again
 9. Would also be beneficial to add some telemetry around the "agent" and its tools. Which tools were called the most, how did the agent handle requests, etc...
 10. Simple add: I'd implement a slightly more robust "tracing" logic. Maybe even just use an extended logging class so I can easily count the "steps" and have a logger object. (I can also use the Python default logging library)
+11. If this was a PROD level environment with heavy traffic + volume and a true LLM endpoint being hit (or locally deployed on-prem) I'd implement caching as well for increased response time and reduced API requests. 
 
 
 ## Time Spent
