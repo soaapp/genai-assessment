@@ -87,6 +87,13 @@ cd backend
 pytest -v
 ```
 
+## Building and Running Docker image
+
+```bash
+docker build -t genai-backend ./backend
+docker run -p 3001:3001 genai-backend
+```
+
 Tests cover:
 - Calculator arithmetic evaluation
 - Weather location extraction and mock response
