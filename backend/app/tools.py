@@ -1,5 +1,5 @@
 """
-Agent tools for handling different types of user queries.
+Agent tools for handling different types of user queries
 
 Current tools:
 - CalculatorTool
@@ -11,7 +11,7 @@ import re, random
 from ast import literal_eval
 
 def tool_calc(q, trace):
-    """Detect and evaluate mathematical expressions."""
+    """Detect and evaluate mathematical expressions"""
     trace.append("CalculatorTool: Checking if query contains math expression")
     if match := re.search(r'\d[\d\s\+\-\*\/]*', q):
         expression = match.group(0).strip()
@@ -21,7 +21,7 @@ def tool_calc(q, trace):
             trace.append(f"CalculatorTool: Validated expression contains operators")
             try:
                 trace.append(f"CalculatorTool: Evaluating '{expression}'")
-                # Using this eval to avoid "code injection" on the site. Ensures its safer! 
+                # Using this eval to avoid "code injection" on the site. Ensures its safer if this was PROD level.
                 result = str(eval(expression, {"__builtins__": {}}, {}))
                 trace.append(f"CalculatorTool: Successfully calculated result = {result}")
                 return "CalculatorTool", result
@@ -35,7 +35,7 @@ def tool_calc(q, trace):
     return None
 
 def tool_weather(q, trace):
-    """Provide mock weather data for location-based queries."""
+    """Provide mock weather data for location-based queries"""
     trace.append("WeatherTool: Checking if query is weather-related")
     if "weather" in q.lower():
         trace.append("WeatherTool: Confirmed - keyword 'weather' found")

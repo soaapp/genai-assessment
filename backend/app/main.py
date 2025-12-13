@@ -1,4 +1,4 @@
-"""FastAPI backend for the agent system."""
+"""FastAPI backend for the agent system"""
 
 import sqlite3
 from fastapi import FastAPI
