@@ -1,7 +1,17 @@
+"""
+Agent tools for handling different types of user queries.
+
+Current tools:
+- CalculatorTool
+- WeatherTool
+- WordProcessorTool
+"""
+
 import re, random
 from ast import literal_eval
 
 def tool_calc(q, trace):
+    """Detect and evaluate mathematical expressions."""
     trace.append("CalculatorTool: Checking if query contains math expression")
     if match := re.search(r'\d[\d\s\+\-\*\/]*', q):
         expression = match.group(0).strip()
@@ -11,6 +21,7 @@ def tool_calc(q, trace):
             trace.append(f"CalculatorTool: Validated expression contains operators")
             try:
                 trace.append(f"CalculatorTool: Evaluating '{expression}'")
+                # Using this eval to avoid "code injection" on the site. Ensures its safer! 
                 result = str(eval(expression, {"__builtins__": {}}, {}))
                 trace.append(f"CalculatorTool: Successfully calculated result = {result}")
                 return "CalculatorTool", result
@@ -24,12 +35,13 @@ def tool_calc(q, trace):
     return None
 
 def tool_weather(q, trace):
+    """Provide mock weather data for location-based queries."""
     trace.append("WeatherTool: Checking if query is weather-related")
     if "weather" in q.lower():
         trace.append("WeatherTool: Confirmed - keyword 'weather' found")
         trace.append("WeatherTool: Attempting to extract location from query")
 
-        # TODO: If the city is still Unknown maybe we can fallback on saying "Unable to get weather"
+        # Extract city from query
         city = "Unknown"
         for p in ["in ", "at ", "for "]:
             if p in q:
@@ -40,7 +52,7 @@ def tool_weather(q, trace):
         if city == "Unknown":
             trace.append("WeatherTool: No location found, using default 'Unknown'")
 
-        # Randomize weather for fun
+        # Generate random weather data
         trace.append("WeatherTool: Generating random weather data")
         conditions = ["Sunny", "Cloudy", "Rainy", "Snowing", "Partly Cloudy"]
         temp = random.randint(-10, 25)
@@ -54,6 +66,7 @@ def tool_weather(q, trace):
     return None
 
 def tool_text(q, trace):
+    """Process text transformations or calculate query length as fallback."""
     trace.append("TextProcessorTool: Analyzing query for text processing keywords")
 
     if "upper" in q.lower():
@@ -74,6 +87,7 @@ def tool_text(q, trace):
         result = str(len(q))
         trace.append(f"TextProcessorTool: Query length = {result} characters")
         return "TextProcessorTool", result
-    
 
+
+# Tool registry for agent execution
 AGENT_TOOLS = [tool_calc, tool_weather, tool_text]

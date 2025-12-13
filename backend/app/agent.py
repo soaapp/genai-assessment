@@ -1,12 +1,16 @@
+"""Core agent logic that routes tasks to appropriate tools"""
+
 import datetime
 from .tools import AGENT_TOOLS
 
 def run_agent(task):
+    """Execute a task by selecting and running the first matching tool."""
     trace = [f"Agent: Received task '{task}'"]
 
     selected_tool = None
     final_output = None
 
+    # Try each tool until one returns a result. (There is no LLM so this would be agent "intelligently" picking a tool.)
     for tool_func in AGENT_TOOLS:
         result = tool_func(task, trace)
         if result:

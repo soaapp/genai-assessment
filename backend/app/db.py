@@ -1,9 +1,11 @@
+"""Database layer for persistance using SQLite"""
+
 import sqlite3, json
 
-# Persistence Layer (Utilizing SQLite)
 DB_NAME = "agent_history.db"
 
 def init_db():
+    """Create the interactions table if it doesn't exist"""
     with sqlite3.connect(DB_NAME) as conn:
         cursor = conn.cursor()
         cursor.execute('''
@@ -19,6 +21,7 @@ def init_db():
         conn.commit()
 
 def log_request(data):
+    """Save an agent interaction to the database"""
     with sqlite3.connect(DB_NAME) as conn:
         cursor = conn.cursor()
         cursor.execute('''
@@ -36,6 +39,7 @@ def log_request(data):
 
 
 def fetch_history(limit = 20):
+    """Retrieve recent interactions from the database. Default set to 20 just for demo"""
     try:
         with sqlite3.connect(DB_NAME) as conn:
             conn.row_factory = sqlite3.Row
